@@ -222,7 +222,6 @@ while True:
 
     while True:     #the main game loop
         
-        
         for event in pygame.event.get():
             if event.type == QUIT:
                 terminate()
@@ -290,11 +289,17 @@ while True:
         Canvas.blit(player.image, player.imagerect)
         Canvas.blit(Dragon.image, Dragon.imagerect)
         
-        Canvas.blit(crate,(crate_x,350))
+        c_rect = Canvas.blit(crate,(crate_x,350))
         crate_x -= crate_speed
         if crate_x < -50:
             crate_x = 1400
-        
+            
+        if player.imagerect.colliderect(c_rect):
+            if player.score > topscore:
+                topscore = player.score
+            crate_x = -500
+            print("i'm infinite")
+            break
 
         drawtext('Score : %s | Top score : %s | Level : %s' %(player.score, topscore, level), scorefont, Canvas, 350, cactusrect.bottom + 10)
         
