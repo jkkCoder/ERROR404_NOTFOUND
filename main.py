@@ -17,6 +17,7 @@ fps = 25
 level = 0
 addnewflamerate = 20
 
+
 addnewbuildingrate=50
 
 mainClock = pygame.time.Clock()
@@ -207,9 +208,8 @@ crate = pygame.transform.rotozoom(crate,0,0.8)
 crate_x = 700
 crate_speed = 6
 
-
 while True:
-    
+    health=3
     flame_list = []
     player = witch()
     moveup = movedown = gravity = False
@@ -219,6 +219,7 @@ while True:
     pygame.mixer.music.play(-1,0.0)
 
     bgx = 0
+    print("outer while")
 
     while True:     #the main game loop
         
@@ -295,13 +296,21 @@ while True:
             crate_x = 1400
             
         if player.imagerect.colliderect(c_rect):
+            health -= 1
             if player.score > topscore:
                 topscore = player.score
-            crate_x = -500
-            print("i'm infinite")
-            break
+            if(health == 0):
+                crate_x = 700
+                flame_list = []
+                flameaddcounter=0
+                break
+            crate_x = 700
+            flame_list = []
+            flameaddcounter=0
+            continue
+                        
 
-        drawtext('Score : %s | Top score : %s | Level : %s' %(player.score, topscore, level), scorefont, Canvas, 350, cactusrect.bottom + 10)
+        drawtext('Score : %s | Top score : %s | Level : %s | Lives : %s' %(player.score, topscore, level, health), scorefont, Canvas, 350, cactusrect.bottom + 10)
         
         for f in flame_list:
             Canvas.blit(f.surface, f.imagerect)
@@ -309,9 +318,19 @@ while True:
                
 
         if ghosthit(player.imagerect, flame_list):
+            health -= 1
             if player.score > topscore:
                 topscore = player.score
-            break
+                
+            if(health == 0):
+                crate_x = 700
+                flame_list = []
+                flameaddcounter=0
+                break
+            crate_x = 700
+            flame_list = []
+            flameaddcounter=0
+            # continue
         
         # if ( player.imagerect.bottom >= firerect.top):
         #     if player.score > topscore:
@@ -326,6 +345,8 @@ while True:
     pygame.mixer.music.stop()
     gameover.play()
     Canvas.blit(endimage, endimagerect)
+    drawtext('Top score : %s' %( topscore), scorefont, Canvas, 1000, cactusrect.bottom + 4)
+
     pygame.display.update()
     waitforkey()
         
