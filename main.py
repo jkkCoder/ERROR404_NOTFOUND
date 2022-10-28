@@ -209,7 +209,7 @@ while True:
     gameover.stop()
     pygame.mixer.music.play(-1,0.0)
 
-    
+    bgx = 0
 
     while True:     #the main game loop
         
@@ -268,7 +268,14 @@ while True:
         
 
         # Canvas.fill(black)
-        Canvas.blit(space,(0,0))
+        Canvas.blit(space,(bgx-window_width,0))
+        Canvas.blit(space,(bgx,0))
+        Canvas.blit(space,(bgx+window_width,0))
+        
+        bgx = bgx - 4
+        if bgx <= (-window_width):
+            bgx = 0
+        
         Canvas.blit(fireimage, firerect)
         Canvas.blit(cactusimage, cactusrect)
         Canvas.blit(player.image, player.imagerect)
