@@ -157,6 +157,8 @@ def check_level(score):
 def load_image(imagename):
     return pygame.image.load(imagename)
 
+space = pygame.transform.scale(load_image('firey-road.png') ,(window_width,window_height))
+
 
 #setting up font and sounds and images
 
@@ -265,7 +267,8 @@ while True:
         Dragon.update()
         
 
-        Canvas.fill(black)
+        # Canvas.fill(black)
+        Canvas.blit(space,(0,0))
         Canvas.blit(fireimage, firerect)
         Canvas.blit(cactusimage, cactusrect)
         Canvas.blit(player.image, player.imagerect)
