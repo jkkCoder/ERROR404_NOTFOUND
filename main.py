@@ -188,6 +188,7 @@ endimagerect.centery = window_height/2
 
 pygame.mixer.music.load('Ratsasan-Piano-BGM.wav')
 gameover = pygame.mixer.Sound('Theme Halloween.mp3')
+death = pygame.mixer.Sound('Scream.mp3')
 
 #getting to the start screen
 
@@ -296,6 +297,9 @@ while True:
             crate_x = 1400
             
         if player.imagerect.colliderect(c_rect):
+            death.play()
+            death.fadeout(3000)
+            pygame.mixer.music.play(-1,0.0)
             health -= 1
             if player.score > topscore:
                 topscore = player.score
@@ -318,6 +322,9 @@ while True:
                
 
         if ghosthit(player.imagerect, flame_list):
+            death.play()
+            death.fadeout(3000)
+            pygame.mixer.music.play(-1,0.0)
             health -= 1
             if player.score > topscore:
                 topscore = player.score
