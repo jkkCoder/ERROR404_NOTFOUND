@@ -17,6 +17,8 @@ fps = 25
 level = 0
 addnewflamerate = 20
 
+addnewbuildingrate=50
+
 mainClock = pygame.time.Clock()
 Canvas = pygame.display.set_mode((window_width,window_height))
 pygame.display.set_caption('Subway Sirfers')
@@ -73,6 +75,26 @@ class flames:
 
     def update(self):
             self.imagerect.left -= self.flamespeed
+
+    def collision(self):
+        if self.imagerect.left == 0:
+            return True
+        else:
+            return False
+
+class building:
+    buildingspeed = 10
+
+    def __init__(self):
+        self.image = load_image('mini-ghosts.png')
+        self.imagerect = self.image.get_rect()
+        self.height = 20
+        self.surface = pygame.transform.scale(self.image, (20,20))
+        self.imagerect = pygame.Rect(window_width - 106, self.height, 20, 30)
+        self.building_x = random.randint(450,550)
+
+    def update(self):
+            self.imagerect.left -= self.buildingspeed
 
     def collision(self):
         if self.imagerect.left == 0:
@@ -198,6 +220,12 @@ waitforkey()
 topscore = 0
 Dragon = dragon()
 
+#creating rect for crate
+crate = pygame.image.load('Buildings.png')
+crate = pygame.transform.rotozoom(crate,0,0.8)
+crate_x = 700
+crate_speed = 6
+
 
 while True:
     
@@ -280,6 +308,11 @@ while True:
         Canvas.blit(cactusimage, cactusrect)
         Canvas.blit(player.image, player.imagerect)
         Canvas.blit(Dragon.image, Dragon.imagerect)
+        
+        Canvas.blit(crate,(crate_x,360))
+        crate_x -= crate_speed
+        if crate_x < -50:
+            crate_x = 1400
         
 
         drawtext('Score : %s | Top score : %s | Level : %s' %(player.score, topscore, level), scorefont, Canvas, 350, cactusrect.bottom + 10)
