@@ -21,7 +21,7 @@ addnewbuildingrate=50
 
 mainClock = pygame.time.Clock()
 Canvas = pygame.display.set_mode((window_width,window_height))
-pygame.display.set_caption('Subway Sirfers')
+pygame.display.set_caption('Subway Surfers')
 
 
 
@@ -82,25 +82,6 @@ class flames:
         else:
             return False
 
-class building:
-    buildingspeed = 10
-
-    def __init__(self):
-        self.image = load_image('mini-ghosts.png')
-        self.imagerect = self.image.get_rect()
-        self.height = 20
-        self.surface = pygame.transform.scale(self.image, (20,20))
-        self.imagerect = pygame.Rect(window_width - 106, self.height, 20, 30)
-        self.building_x = random.randint(450,550)
-
-    def update(self):
-            self.imagerect.left -= self.buildingspeed
-
-    def collision(self):
-        if self.imagerect.left == 0:
-            return True
-        else:
-            return False
 
 class witch:
     global moveup, movedown, gravity, cactusrect, firerect
@@ -120,18 +101,18 @@ class witch:
         
         if (moveup and (self.imagerect.top > cactusrect.bottom)):
             self.imagerect.top -= self.speed
-            # self.score += 1
+            
             
         if (movedown and (self.imagerect.bottom < firerect.top)):
             self.imagerect.bottom += self.downspeed
-            # self.score += 1
+            
             
         if (gravity and (self.imagerect.bottom < firerect.top)):
             self.imagerect.bottom += self.speed
 
 
 #to end the program
-def terminate():        
+def terminate():
     pygame.quit()
     sys.exit()
 
@@ -160,20 +141,20 @@ def drawtext(text, font, surface, x, y):        #to display text on the screen
 def check_level(score):
     global window_height, level, cactusrect, firerect
     if score in range(0,10):
-        firerect.top = window_height - 50
+        firerect.top = 550
         cactusrect.bottom = 50
         level = 1
     elif score in range(10, 30):
-        firerect.top = window_height - 100
+        firerect.top = 550 
         cactusrect.bottom = 100
         level = 2
     elif score in range(30,50):
         level = 3
-        firerect.top = window_height-150
+        firerect.top = 550
         cactusrect.bottom = 150
     elif score in range(50,4000):
         level = 4
-        firerect.top = window_height - 200
+        firerect.top = 550 
         cactusrect.bottom = 200
 
 def load_image(imagename):
@@ -187,7 +168,7 @@ space = pygame.transform.scale(load_image('firey-road.png') ,(window_width,windo
 font = pygame.font.SysFont(None, 48)
 scorefont = pygame.font.SysFont(None, 30)
 
-fireimage = load_image('fire_bricks.png')
+fireimage = load_image('fire_bricks_upside_down.png')
 firerect = fireimage.get_rect()
 
 
@@ -221,7 +202,7 @@ topscore = 0
 Dragon = dragon()
 
 #creating rect for crate
-crate = pygame.image.load('Buildings.png')
+crate = pygame.image.load('Building.png')
 crate = pygame.transform.rotozoom(crate,0,0.8)
 crate_x = 700
 crate_speed = 6
@@ -309,7 +290,7 @@ while True:
         Canvas.blit(player.image, player.imagerect)
         Canvas.blit(Dragon.image, Dragon.imagerect)
         
-        Canvas.blit(crate,(crate_x,360))
+        Canvas.blit(crate,(crate_x,350))
         crate_x -= crate_speed
         if crate_x < -50:
             crate_x = 1400
@@ -327,10 +308,10 @@ while True:
                 topscore = player.score
             break
         
-        if ( player.imagerect.bottom >= firerect.top):
-            if player.score > topscore:
-                topscore = player.score
-            break
+        # if ( player.imagerect.bottom >= firerect.top):
+        #     if player.score > topscore:
+        #         topscore = player.score
+        #     break
 
         pygame.display.update()
     
