@@ -80,7 +80,7 @@ class flames:
         else:
             return False
 
-class maryo:
+class witch:
     global moveup, movedown, gravity, cactusrect, firerect
     speed = 10
     downspeed = 20
@@ -202,7 +202,7 @@ Dragon = dragon()
 while True:
     
     flame_list = []
-    player = maryo()
+    player = witch()
     moveup = movedown = gravity = False
     flameaddcounter = 0
 
