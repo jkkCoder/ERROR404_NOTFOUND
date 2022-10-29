@@ -202,8 +202,11 @@ waitforkey()
 
 #start of the main code
 
-topscore = 0
+file1 = open("topScore.txt","r")
+content = file1.read()
+topscore = int(content)
 Dragon = dragon()
+file1.close()
 
 #creating rect for crate
 crate = pygame.image.load('Building.png')
@@ -305,7 +308,11 @@ while True:
             pygame.mixer.music.play(-1,0.0)
             health -= 1
             if player.score > topscore:
+                file1 = open("topScore.txt","w")
                 topscore = player.score
+                top = str(topscore)
+                file1.write(top)
+                file1.close()
             if(health == 0):
                 crate_x = 700
                 flame_list = []
@@ -330,7 +337,11 @@ while True:
             pygame.mixer.music.play(-1,0.0)
             health -= 1
             if player.score > topscore:
+                file1 = open("topScore.txt","w")
                 topscore = player.score
+                top = str(topscore)
+                file1.write(top) 
+                file1.close()
                 
             if(health == 0):
                 crate_x = 700
