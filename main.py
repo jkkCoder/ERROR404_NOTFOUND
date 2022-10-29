@@ -21,13 +21,14 @@ addnewflamerate = 20
 addnewbuildingrate=50
 
 mainClock = pygame.time.Clock()
+#creating canvas
 Canvas = pygame.display.set_mode((window_width,window_height))
 pygame.display.set_caption('Subway Surfers')
 
 
 
 #defining the required function
-
+#class for the monster
 class dragon:
 
     global firerect, imagerect, Canvas
@@ -64,6 +65,7 @@ class dragon:
         h = self.imagerect.top
         return h
 
+#class for the monster throwing objects
 class flames:
     flamespeed = 10
 
@@ -83,7 +85,7 @@ class flames:
         else:
             return False
 
-
+#class for the player
 class witch:
     global moveup, movedown, gravity, cactusrect, firerect
     speed = 10
@@ -112,34 +114,34 @@ class witch:
             self.imagerect.bottom += self.speed
 
 
-#to end the program
+#function to end the program
 def terminate():
     pygame.quit()
     sys.exit()
 
 def waitforkey():
-    #to wait for user to start
+    #function to wait for user to start
     while True :                                        
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 terminate()
-            if event.type == pygame.KEYDOWN:     #to terminate if the user presses the escape key
+            if event.type == pygame.KEYDOWN:     #function to terminate if the user presses the escape key
                 if event.key == pygame.K_ESCAPE:
                     terminate()
                 return
-def ghosthit(playerrect, flames):      #to check if the ghost has hit the player or not
+def ghosthit(playerrect, flames):      #function to check if the ghost has hit the player or not
     for f in flame_list:
         if playerrect.colliderect(f.imagerect):
             return True
         return False
 
-def drawtext(text, font, surface, x, y):        #to display text on the screen
+def drawtext(text, font, surface, x, y):        #function to display text on the screen
     textobj = font.render(text, 1, white)
     textrect = textobj.get_rect()
     textrect.topleft = (x,y)
     surface.blit(textobj, textrect)
 
-def check_level(score):
+def check_level(score):                     #function to check the level of the player
     global window_height, level, cactusrect, firerect
     if score in range(0,10):
         firerect.top = 550
@@ -198,7 +200,7 @@ Canvas.blit(startimage, startimagerect)
 pygame.display.update()
 waitforkey()
 
-#start for the main code
+#start of the main code
 
 topscore = 0
 Dragon = dragon()
@@ -228,6 +230,7 @@ while True:
             if event.type == QUIT:
                 terminate()
 
+            #code to move the player UP and DOWN
             if event.type == KEYDOWN:
                 
                 if event.key == K_UP:
@@ -313,14 +316,14 @@ while True:
             flameaddcounter=0
             continue
                         
-
+        #code to display text while the player is playing
         drawtext('Score : %s | Top score : %s | Level : %s | Lives : %s' %(player.score, topscore, level, health), scorefont, Canvas, 350, cactusrect.bottom + 10)
         
         for f in flame_list:
             Canvas.blit(f.surface, f.imagerect)
 
                
-
+        #code to modify the health after the player is hit by the ghost
         if ghosthit(player.imagerect, flame_list):
             death.play()
             death.fadeout(3000)
@@ -337,12 +340,7 @@ while True:
             crate_x = 700
             flame_list = []
             flameaddcounter=0
-            # continue
-        
-        # if ( player.imagerect.bottom >= firerect.top):
-        #     if player.score > topscore:
-        #         topscore = player.score
-        #     break
+
 
         pygame.display.update()
     
@@ -351,6 +349,7 @@ while True:
     
     pygame.mixer.music.stop()
     gameover.play()
+    #code to take player to the end screen and display top score
     Canvas.blit(endimage, endimagerect)
     drawtext('Top score : %s' %( topscore), scorefont, Canvas, 1000, cactusrect.bottom + 4)
 
